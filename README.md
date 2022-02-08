@@ -15,7 +15,7 @@ Racktables is a nifty and robust solution for datacenter and server room asset m
 Build Image:
 
 ```
-docker build --build-arg RACKTABLES_VERSION=0.21.5.1 -f Dockerfile -t fimo/racktables:0.21.5.1 .
+docker build --build-arg RACKTABLES_VERSION=0.21.5.1 -f Dockerfile -t cmdb/racktables:0.21.5.1 .
 ```
 
 

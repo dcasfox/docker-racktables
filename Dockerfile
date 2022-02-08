@@ -62,10 +62,10 @@ RUN apk --no-cache update \
 
 ARG RACKTABLES_VERSION
 ENV RACKTABLES_PATH /racktables
-RUN wget -q https://github.com/dcasfox/racktables/archive/FiMo-RackTables-$RACKTABLES_VERSION.tar.gz \
-        && tar -xzf FiMo-RackTables-$RACKTABLES_VERSION.tar.gz \
-        && rm FiMo-RackTables-$RACKTABLES_VERSION.tar.gz \
-        && mv racktables-FiMo-RackTables-$RACKTABLES_VERSION $RACKTABLES_PATH
+RUN wget -q https://github.com/dcasfox/racktables/archive/CMDB-RackTables-$RACKTABLES_VERSION.tar.gz \
+        && tar -xzf CMDB-RackTables-$RACKTABLES_VERSION.tar.gz \
+        && rm CMDB-RackTables-$RACKTABLES_VERSION.tar.gz \
+        && mv racktables-CMDB-RackTables-$RACKTABLES_VERSION $RACKTABLES_PATH
 
 ADD httpd.conf.template /etc/apache2/httpd.conf.template
 ADD docker-entrypoint.sh make_racktables_secret.php init_racktables_db.php utils.php /
