@@ -37,4 +37,19 @@ if [ -f /run/apache2/httpd.pid ];then
 	rm /run/apache2/httpd.pid
 fi
 
+# DB Init
+echo "Waiting for mysql"
+until mysql -u$RACKTABLES_DB_USERNAME -p$RACKTABLES_DB_PASSWORD -h$RACKTABLES_DB_HOST -P$RACKTABLES_DB_PORT -e "show databases;" &> /dev/null
+do
+  printf "."
+  sleep 1
+done
+echo -e "\nmysql ready"
+
+if [[ -z "`mysql -u$RACKTABLES_DB_USERNAME -p$RACKTABLES_DB_PASSWORD -h$RACKTABLES_DB_HOST -P$RACKTABLES_DB_PORT -BNe \"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='${RACKTABLES_DB_NAME}'\" 2>&1`" ]]; then
+   sed -i.org -e "s/racktables/$RACKTABLES_DB_NAME/" ${RACKTABLES_PATH}/wwwroot/api/racktables215_init.sql
+   mysql -u$RACKTABLES_DB_USERNAME -p$RACKTABLES_DB_PASSWORD -h$RACKTABLES_DB_HOST -P$RACKTABLES_DB_PORT < ${RACKTABLES_PATH}/wwwroot/api/racktables215_init.sql
+   mv -f ${RACKTABLES_PATH}/wwwroot/api/racktables215_init.sql.org ${RACKTABLES_PATH}/wwwroot/api/racktables215_init.sql
+fi
+
 exec httpd -D FOREGROUND $@
