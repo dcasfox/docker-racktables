@@ -19,6 +19,7 @@
 
 export APACHE_HTTP_PORT=${APACHE_HTTP_PORT:-"8080"}
 export SERVER_ADMIN=${SERVER_ADMIN:-"admin@example.com"}
+export RACKTABLES_DB_NAME=${RACKTABLES_DB_NAME:-"racktables"}
 
 if [ -w /etc/apache2/httpd.conf ]; then
 	cat /etc/apache2/httpd.conf.template | envsubst '${APACHE_HTTP_PORT} ${RACKTABLES_PATH} ${SERVER_ADMIN}' > /etc/apache2/httpd.conf
